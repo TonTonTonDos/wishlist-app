@@ -20,3 +20,9 @@ You can then access the application through the following URL:
 
     http://127.0.0.1
 
+You can then access the pgAdmin through the following URL:
+
+    http://127.0.0.1:8080
+
+default login: admin@example.com
+default password: admin
