@@ -86,3 +86,18 @@ a.desc:after {
 .form-group {
     margin-bottom: 1rem;
 }
+
+/* Стили для кнопки выхода */
+.navbar-nav > li > form > button.logout {
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
+
+.navbar-nav > li > form > button.logout:hover {
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
