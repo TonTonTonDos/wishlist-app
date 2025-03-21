@@ -9,7 +9,6 @@ use yii\base\Model;
  * LoginForm is the model behind the login form.
  *
  * @property-read User|null $user
- *
  */
 class LoginForm extends Model
 {
@@ -18,7 +17,6 @@ class LoginForm extends Model
     public $rememberMe = true;
 
     private $_user = false;
-
 
     /**
      * @return array the validation rules.
@@ -48,7 +46,7 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Неверное имя пользователя или пароль.');
             }
         }
     }
@@ -74,8 +72,25 @@ class LoginForm extends Model
     {
         if ($this->_user === false) {
             $this->_user = User::findByUsername($this->username);
+
+            // If user not found by username, try email
+            if ($this->_user === null) {
+                $this->_user = User::findByEmail($this->username);
+            }
         }
 
         return $this->_user;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Имя пользователя или Email',
+            'password' => 'Пароль',
+            'rememberMe' => 'Запомнить меня',
+        ];
     }
 }
