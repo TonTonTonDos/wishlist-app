@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     unzip \
     git \
+    dos2unix \
     && docker-php-ext-install \
     pdo \
     pdo_pgsql \
@@ -21,11 +22,18 @@ WORKDIR /var/www
 # Копирование исходного кода приложения
 COPY ./src /var/www
 
+# Исправление окончаний строк для всех файлов скриптов
+RUN find /var/www -type f -name "*.sh" -exec dos2unix {} \; \
+    && find /var/www -type f -name "yii" -exec dos2unix {} \; \
+    && chmod +x /var/www/yii
+
 # Установка прав доступа
 RUN chown -R www-data:www-data /var/www
 
 # Установка зависимостей Composer
-RUN composer install --no-interaction --no-scripts --no-autoloader
+RUN cd /var/www && composer install --no-interaction
 
 # Генерация автозагрузчика
-RUN composer dump-autoload --optimize
+RUN cd /var/www && composer dump-autoload --optimize
+
+CMD ["php-fpm"]

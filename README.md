@@ -12,9 +12,21 @@ INSTALLATION
 
 ### Install with Docker
 
+Clone repository
+
+    git clone https://github.com/TonTonTonDos/wishlist-app
+
+Move to directory whislist-app
+
+    cd wishlist-app
+
 Start docker container
 
     docker-compose up --build
+
+Run migrations 
+
+    docker-compose exec php /var/www/yii migrate
 
 You can then access the application through the following URL:
 
