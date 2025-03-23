@@ -24,9 +24,22 @@ Start docker container
 
     docker-compose up --build
 
+If /usr/bin/env: 'php\r': No such file or directory appears:
+
+    docker-compose exec php /bin/bash
+    find /var/www -type f -name "*.sh" -exec dos2unix {} \; \
+    && find /var/www -type f -name "yii" -exec dos2unix {} \; \
+    && chmod +x /var/www/yii
+
+Install composer
+
+    docker-compose exec php /bin/bash
+    composer install --no-interaction && composer dump-autoload --optimize
+
 Run migrations 
 
-    docker-compose exec php /var/www/yii migrate
+    docker-compose exec php /bin/bash
+    ./yii migrate
 
 You can then access the application through the following URL:
 
